@@ -1,7 +1,5 @@
-
-from . import formatting as f
-from . import options as opts
-
+from packages.tools import formatting as f
+from packages import options as opts
 
 #ANCHOR - Outline
 # Sort images
@@ -10,7 +8,7 @@ from . import options as opts
 # Allow user to create custom sorts
 # Sort games?
 # Sort Downloads folder -> installers
-
+# Multi-thread tasks for faster processing
 
 
 def startup(options_dict):
@@ -53,17 +51,6 @@ def execute_selected_option(user_choice, options_dict):
         case 4:
             opts.view_desc()
             return True
-
-
-# if __name__ == '__main__':
-
-#     running = True
-#     while running:
-#         running = startup(opts.options)
-
-
-
-
 
 
 
