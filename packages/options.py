@@ -1,4 +1,9 @@
+import os
+from time import sleep
+
 from packages.tools import formatting as f
+from packages.tools import file_functions as funcs
+
 
 options = {
     1:"Default Sort",
@@ -11,8 +16,19 @@ options = {
 
 
 def default_sort():
-    
+
+    print("Starting Default Sort...")
     f.line()
+    print("Path of directory/folder to sort: ")
+
+    contents = funcs.get_folder()
+
+    f.surround(funcs.get_types(contents))
+
+    # Sort the folder
+
+    # Identify all file types with folder recursively
+
 
 def aggressive_sort():
 
@@ -28,4 +44,4 @@ def custom_sort():
 
 def view_desc():
 
-    f.line()            
+    f.line()
