@@ -23,28 +23,56 @@ def default_sort():
 
     contents, root_dir = funcs.get_folder()
 
-    f.surround(f"Types: {funcs.get_types(contents)}")
 
     types = funcs.get_types(contents)
+    f.surround(f"Types: {types}")
 
-    # Sort the folder
+    types_list = []
+
     for type in types:
+        types_list.append(type)
+
+    print(f"Types List: {types_list}")
+
+    # Sort folder
+    for type in types_list:
+
+        # Sort Documents
         if type in funcs.document_extensions:
-            try:
-                funcs.mkdir(root_dir, "Documents")
-                # move the file into docuemnts folder
-            except:
-                # exists, so move into documents folder
-                pass
+            
+            funcs.gather("Documents", root_dir, contents, type)
 
-    funcs.mkdir(root_dir, "TestFolder")
+        # Sort Images
+        if type in funcs.image_extensions:
 
-    # funcs.get_ext_fullname()
+            funcs.gather("Images", root_dir, contents, type)
+
+        # Sort Audio Files
+        if type in funcs.audio_extensions:
+
+            funcs.gather("Audio_Files", root_dir, contents, type)
+            
+        # Sort Video Files
+        if type in funcs.video_extensions:
+
+            funcs.gather("Video_Files", root_dir, contents, type)
+
+        # Sort Program Files
+        if type in funcs.application_extensions:
+
+            funcs.gather("Applications", root_dir, contents, type)
+
     
-    # Identify all file types with folder recursively
+    funcs.gather("Miscellaneous", root_dir, contents)
+
 
 
 def aggressive_sort():
+
+
+
+
+
 
 
     f.line()
