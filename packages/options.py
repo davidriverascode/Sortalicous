@@ -25,14 +25,13 @@ def default_sort():
 
 
     types = funcs.get_types(contents)
-    f.surround(f"Types: {types}")
 
     types_list = []
 
     for type in types:
         types_list.append(type)
 
-    print(f"Types List: {types_list}")
+    print("Sorting . . .")
 
     # Sort folder
     for type in types_list:
@@ -65,7 +64,7 @@ def default_sort():
     
     funcs.gather("Miscellaneous", root_dir, contents)
 
-
+    print("Finished Sort. Check folder to see!")
 
 def aggressive_sort():
 
