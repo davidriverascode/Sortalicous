@@ -22,4 +22,4 @@ Right click on the folder, and select `Copy as Path` <br></br>
 <img width="752" height="685" alt="image" src="https://github.com/user-attachments/assets/ee5eea67-95aa-488a-b124-dae3fa38325e" /> <br></br>
 Then, paste this path into Sortalicous when prompted: <br></br>
 <img width="895" height="885" alt="image" src="https://github.com/user-attachments/assets/a84aabd3-6b02-42ec-8d71-68ea34750c1a" /> <br></br>
-You can also manually type the path if you feel inclined. Please use `\` (back slashes) instead of `/` (forward slashes)
+You can also manually type the path if you feel inclined. Please use `\` (back slashes) instead of `/` (forward slashes), and `""` (quotes) are not required.
