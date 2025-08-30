@@ -21,12 +21,26 @@ def default_sort():
     f.line()
     print("Path of directory/folder to sort: ")
 
-    contents = funcs.get_folder()
+    contents, root_dir = funcs.get_folder()
 
-    f.surround(funcs.get_types(contents))
+    f.surround(f"Types: {funcs.get_types(contents)}")
+
+    types = funcs.get_types(contents)
 
     # Sort the folder
+    for type in types:
+        if type in funcs.document_extensions:
+            try:
+                funcs.mkdir(root_dir, "Documents")
+                # move the file into docuemnts folder
+            except:
+                # exists, so move into documents folder
+                pass
 
+    funcs.mkdir(root_dir, "TestFolder")
+
+    # funcs.get_ext_fullname()
+    
     # Identify all file types with folder recursively
 
 
