@@ -13,7 +13,7 @@ from packages import options as opts
 
 def startup(options_dict):
 
-    f.surround("Hello, welcome to Sortalicous!!")
+    f.print_random_title()
 
     f.surround("Please choose an option: ")
 
