@@ -1,5 +1,7 @@
 import shutil
+import stat
 import os
+import errno
 from time import sleep
 
 from packages.tools import formatting as f
@@ -16,6 +18,9 @@ def get_folder():
 
         if root_dir == "test":
             root_dir = 'C:/Users/david/Downloads'
+
+        elif root_dir == "huge":
+            root_dir = 'C:/Users/david/OneDrive - Norwich University/Misc/Coding/Projects/Sortalicous/Good Test Folder'
 
         root_dir = root_dir.replace('"', '')
 
@@ -43,8 +48,14 @@ def get_types(folder_obj):
 
             if extension not in types:
                 types[extension] = 1
+            else:
+                types[extension] += 1
 
-            types[extension] += 1
+        else:
+            if "folder" not in types:
+                types["folder"] = 1
+            else:
+                types["folder"] += 1
 
     return types
 
@@ -73,13 +84,39 @@ def mkdir(root_dir, fname="Folder"):
 # Not tested yet
 def move_dir(curr_path, new_path, fname):
 
-    # Create folder in destination with same name
-    mkdir(new_path, fname)
+    # # Create folder in destination with same name
+    # mkdir(new_path, fname)
 
     new_path = f"{new_path}/{fname}" # Change the new path to include the new folder
 
     # Copy the contents into the new path
     shutil.copytree(curr_path, new_path)
+    
+    # Delete the contents of the older folder Recursively?
+    try:
+        shutil.rmtree(curr_path, ignore_errors=True)
+    except Exception as error:
+        print(f"Directory Move Error: {error}")
+
+    # Fixes Read Only?
+    def errorRemoveReadonly(func, path, excinfo):
+        exc_type, exc_value, _ = excinfo
+        # Only catch permission denied errors
+        if isinstance(exc_value, PermissionError) and exc_value.errno == errno.EACCES:
+            os.chmod(path, stat.S_IWRITE)
+            func(path)  # retry
+        else:
+            return
+
+
+    shutil.rmtree(curr_path, ignore_errors=False, onerror=errorRemoveReadonly)
+
+    try:
+        os.rmdir(curr_path)
+    except Exception as err:
+        # print(f"Directory Delete Error: {err}")
+        pass
+
 
 # Will override existing files
 def move_file(file_path, destination):
@@ -103,10 +140,11 @@ def gather(dir_name, root_dir, contents, type="Any"):
         # Move the files
         assoc_types = get_assoc_types(contents)
         for file in assoc_types:
+            # Ignore errors lol
             try:
                 move_file(f"{root_dir}/{file.name}", f"{root_dir}/{dir_name}")
-            except Exception as e:
-                print(f"File move failure-> {e}")
+            except:
+                pass
 
         return
     
@@ -126,6 +164,12 @@ def gather(dir_name, root_dir, contents, type="Any"):
                 print(f"File move failure: {e}")
 
     return
+
+def gather_folders(root_dir, contents):
+    for thing in contents:
+        if (not thing.is_file()) and thing.name not in taken_folder_names:
+            mkdir(root_dir, "Folders")
+            move_dir(f"{root_dir}/{thing.name}", f"{root_dir}/Folders", thing.name)
 
 def get_ext_fullname(extension):
 
@@ -147,7 +191,13 @@ def get_ext_fullname(extension):
         
         else:
             return None
-        
+
+taken_folder_names = [
+    "Documents",
+    "Images",
+    "Applications",
+    "Miscellaneous"
+]
 
 document_extensions = [
     '.docx',
@@ -211,7 +261,7 @@ video_extensions = [
     '.wmv'
 ]
 
-compressed_extensions = [
+archive_extensions = [
     '.rar',
     '.zip',
     '.hqx',

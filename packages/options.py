@@ -6,11 +6,12 @@ from packages.tools import file_functions as funcs
 
 
 options = {
-    1:"Default Sort",
-    2:"Aggressive Sort",
-    3:"Create Custom Sort Profile",
-    4:"View description of a sort",
-    5:"Exit"
+    "1":"Default Sort",
+    "2":"Aggressive Sort",
+    "3":"Create Custom Sort Profile",
+    "4":"View description of a sort",
+    "5":"More Options",
+    "E":"Exit"
 }
 
 
@@ -23,6 +24,7 @@ def default_sort():
 
     contents, root_dir = funcs.get_folder()
 
+    funcs.gather_folders(root_dir, contents)
 
     types = funcs.get_types(contents)
 
@@ -35,6 +37,9 @@ def default_sort():
 
     # Sort folder
     for type in types_list:
+
+        # if type == "folder":
+            # move the folders
 
         # Sort Documents
         if type in funcs.document_extensions:
@@ -61,23 +66,35 @@ def default_sort():
 
             funcs.gather("Applications", root_dir, contents, type)
 
+        # Sort Archives
+        if type in funcs.archive_extensions:
+
+            funcs.gather("Archives", root_dir, contents, type)
     
     funcs.gather("Miscellaneous", root_dir, contents)
-
+ 
     print("Finished Sort. Check folder to see!")
 
 def aggressive_sort():
 
-
-    f.line()
-
+    print("Feature not finished, check back another day!")
 
 def custom_sort():
 
-
-    f.line()
+    print("Feature not finished, check back another day!")
 
 
 def view_desc():
 
-    f.line()
+    print("\n1. Default Sort")
+    print("\n    - Sorts items into folders according to the extension. For example, will sort .docx (Word Documents) into a folder called 'Documents'")
+    print("\n2. Aggressive Sort")
+    print("\n    - Sorts items into folders according to the extension. Then sorts then into further folder alphabetically based off the file name.")
+    print("\n3. Create Custom Sort Profile")
+    print("\n    - Allows the user to create custom sort profiles. Takes a little bit of time to set up, but makes the sort more personalized\n")
+
+def show_more_options():
+
+    f.surround("Extended Options")
+    print("1. Run a sort on startup")
+    print("2. Run a sort on a time interval")
