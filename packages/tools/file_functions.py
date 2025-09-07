@@ -1,8 +1,10 @@
+from time import sleep
+
 import shutil
+import errno
+import json
 import stat
 import os
-import errno
-from time import sleep
 
 from packages.tools import formatting as f
 
@@ -35,7 +37,7 @@ def get_folder():
                 files_list.append(file)
 
             return files_list, root_dir
-        
+
 
 def get_types(folder_obj):
 
@@ -91,7 +93,7 @@ def move_dir(curr_path, new_path, fname):
 
     # Copy the contents into the new path
     shutil.copytree(curr_path, new_path)
-    
+
     # Delete the contents of the older folder Recursively?
     try:
         shutil.rmtree(curr_path, ignore_errors=True)
@@ -117,7 +119,6 @@ def move_dir(curr_path, new_path, fname):
         # print(f"Directory Delete Error: {err}")
         pass
 
-
 # Will override existing files
 def move_file(file_path, destination):
 
@@ -130,7 +131,7 @@ def move_file(file_path, destination):
 def gather(dir_name, root_dir, contents, type="Any"):
 
     if type == "Any":
-          
+
         # Make directory
         try:
             mkdir(root_dir, dir_name)
@@ -147,7 +148,7 @@ def gather(dir_name, root_dir, contents, type="Any"):
                 pass
 
         return
-    
+
     # Make directory
     try:
         mkdir(root_dir, dir_name)
@@ -188,9 +189,33 @@ def get_ext_fullname(extension):
     for ext in dict:
         if ext == extension:
             return dict[ext]
-        
+
         else:
             return None
+
+def get_json(config_name):
+
+    data = "your mom"
+    try:
+        file = open(f'.\\packages\\startup_configs\\{config_name}', 'r')
+    except FileNotFoundError:
+        file = open(f"{os.getcwd()}\\Sortalicous\\packages\\startup_configs\\{config_name}", 'r')
+
+    data = json.load(file)
+    file.close()
+    return data
+
+def overwrite_json(new_json, config_name):
+
+    try:
+        file = open(f'.\\packages\\startup_configs\\{config_name}', 'w')
+    except FileNotFoundError:
+        file = open(f"{os.getcwd()}\\Sortalicous\\packages\\startup_configs\\{config_name}", 'w')
+
+    json.dump(new_json, file, indent=4)
+    file.close()
+    return
+
 
 taken_folder_names = [
     "Documents",

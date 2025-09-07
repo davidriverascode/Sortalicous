@@ -52,7 +52,9 @@ def execute_selected_option(user_choice, options_dict):
             opts.view_desc()
             return True
         
-        
+        case "5":
+            opts.more_options()
+            return True
         
         case "E":
             return False

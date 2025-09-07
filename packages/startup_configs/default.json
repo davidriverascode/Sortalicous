@@ -1,0 +1,9 @@
+{
+    "startup": true,
+    "command": {
+        "schtasks": "/create",
+        "/sc": "onstart",
+        "/tn": "SORTALICOUS_DEFAULT_SORT",
+        "/tr": "\"C:\\Users\\david\\OneDrive - Norwich University (1)\\Misc\\Coding\\Projects\\Sortalicous\\Sortalicous\\Sortalicous\\startup.py\""
+    }
+}

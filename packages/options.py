@@ -1,5 +1,10 @@
-import os
 from time import sleep
+import subprocess
+import ctypes
+import pyuac
+import json
+import sys
+import os
 
 from packages.tools import formatting as f
 from packages.tools import file_functions as funcs
@@ -93,8 +98,40 @@ def view_desc():
     print("\n3. Create Custom Sort Profile")
     print("\n    - Allows the user to create custom sort profiles. Takes a little bit of time to set up, but makes the sort more personalized\n")
 
-def show_more_options():
+def more_options():
 
-    f.surround("Extended Options")
+    print("More Options")
+    f.line()
     print("1. Run a sort on startup")
     print("2. Run a sort on a time interval")
+    answer = f.surround("-> ", True)
+
+    match answer:
+
+        case "1":
+            config = funcs.get_json("default.json")
+
+            config["startup"] = True
+
+            command = config["command"]
+            command["/tr"] = f'"{os.getcwd()}\\Sortalicous\\startup.py"'
+            config["command"] = command
+
+            funcs.overwrite_json(config, "default.json")
+
+            updated_config = (funcs.get_json("default.json"))["command"]
+            final_command = ""
+            for key in updated_config:
+                final_command = final_command + f"{key} {updated_config[key]} "
+            # print(final_command)
+
+            try:
+                subprocess.call(final_command, shell=True)
+                input("press enter to exit ")
+            except Exception as e:
+                print("Err: ", e)
+                input("press enter to exit ")
+
+            
+
+            
