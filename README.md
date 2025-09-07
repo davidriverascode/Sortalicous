@@ -5,13 +5,10 @@ A Windows 11 file sorting program to help with unorganized file systems!
 
 
 
-# Installation Instructions:
-Obtain files: <br></br>
-Clone the repo: <br></br>
-`git clone https://github.com/davidriverascode/Sortalicous` <br></br>
-(Or download the zip, and unzip it) <br></br>
-Then, run `main.py` with python: <br></br>
-`python3 main.py` <br></br>
+# Installation Instructions
+Obtain the files by either cloding the repo `git clone https://github.com/davidriverascode/Sortalicous`, or downloading the zip, and unzipping it.<br></br>
+Then, in the Sortalicous directory, run `pip install -r requirements.txt` to install the requirements. (`python3 -m pip install -r requirements.txt` worked for me)<br></br>
+Then, in the Sortalicous directory, run `main.py` with python: `python3 main.py` <br></br>
 And enjoy!
 
 <br></br>
