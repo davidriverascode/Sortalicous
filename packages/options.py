@@ -1,9 +1,5 @@
 from time import sleep
 import subprocess
-import ctypes
-import pyuac
-import json
-import sys
 import os
 
 from packages.tools import formatting as f
@@ -20,14 +16,21 @@ options = {
 }
 
 
+def default_sort(sort_path="default", auto=False):
 
-def default_sort():
+    if auto:
+        f.print_random_title()
+        f.line()
 
     print("Starting Default Sort...")
     f.line()
-    print("Path of directory/folder to sort: ")
 
-    contents, root_dir = funcs.get_folder()
+    # Determine if path to sort was passed
+    if sort_path == "default":
+        print("Path of directory/folder to sort: ")
+        contents, root_dir = funcs.get_folder()
+    else:
+        contents, root_dir = funcs.get_folder(sort_path)
 
     funcs.gather_folders(root_dir, contents)
 
@@ -77,7 +80,8 @@ def default_sort():
             funcs.gather("Archives", root_dir, contents, type)
     
     funcs.gather("Miscellaneous", root_dir, contents)
- 
+    
+    f.line()
     print("Finished Sort. Check folder to see!")
 
 def aggressive_sort():
@@ -108,29 +112,40 @@ def more_options():
 
     match answer:
 
-        case "1":
+        case "1": # RUN ON STARTUP OPTION
+
+            # Make the batch file that will run the python script
+            funcs.make_batch_file()
+
+            # Get the default sort config for schtasks.exe
             config = funcs.get_json("default.json")
 
+            # Edit the default sort config
             config["startup"] = True
 
             command = config["command"]
-            command["/tr"] = f'"{os.getcwd()}\\Sortalicous\\startup.py"'
+            command["/tr"] = f'"{os.getcwd()}\\packages\\batch_files\default.bat"'
             config["command"] = command
-
+                
+            path_to_sort = f.surround("Path to sort: ", True)
+            config["sort-path"] = path_to_sort
+            
             funcs.overwrite_json(config, "default.json")
 
+            # Re-fetch the config json after editing it 
             updated_config = (funcs.get_json("default.json"))["command"]
+
+            # Craft the final schtasks.exe command
             final_command = ""
             for key in updated_config:
                 final_command = final_command + f"{key} {updated_config[key]} "
-            # print(final_command)
 
+            # And then try and run it
             try:
                 subprocess.call(final_command, shell=True)
-                input("press enter to exit ")
             except Exception as e:
-                print("Err: ", e)
-                input("press enter to exit ")
+                print(f"\nError: {e}\n")
+                input("Press any key to exit -> ")
 
             
 

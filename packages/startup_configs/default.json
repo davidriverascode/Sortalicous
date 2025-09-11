@@ -2,8 +2,10 @@
     "startup": true,
     "command": {
         "schtasks": "/create",
-        "/sc": "onstart",
+        "/sc": "onlogon",
+        "/delay": "0000:30",
         "/tn": "SORTALICOUS_DEFAULT_SORT",
-        "/tr": "\"C:\\Users\\david\\OneDrive - Norwich University (1)\\Misc\\Coding\\Projects\\Sortalicous\\Sortalicous\\Sortalicous\\startup.py\""
-    }
+        "/tr": "\"C:\\LocalCoding\\Sortalicous\\packages\\batch_files\\default.bat\""
+    },
+    "sort-path": "C:\\Users\\david\\Downloads"
 }
