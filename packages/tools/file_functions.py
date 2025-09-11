@@ -16,6 +16,7 @@ def get_folder(path="none"):
     inv_path = True
     while inv_path:
         if path == "none":
+            print("Please enter the path to sort: ")
             root_dir = f.surround("-> ", True)
 
         else:

@@ -27,7 +27,6 @@ def default_sort(sort_path="default", auto=False):
 
     # Determine if path to sort was passed
     if sort_path == "default":
-        print("Path of directory/folder to sort: ")
         contents, root_dir = funcs.get_folder()
     else:
         contents, root_dir = funcs.get_folder(sort_path)
