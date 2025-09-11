@@ -1,3 +1,5 @@
+import json
+
 from packages.tools import file_functions as funcs
 from packages.tools import formatting as f
 
@@ -20,6 +22,20 @@ class Sort_Editor:
             # Specify files to move into that folder
             # Specify files to delete
         # --- OUTLINE ---
+        
+        f.line()
+        print("What would you like to call this sort?")
+        name = f.surround("--> ", True)
+
+        cfg_json = {
+            "name":name,
+            "folders_2_create":[
+                {
+                    "name":"default"
+                }
+            ],
+            "files_2_delete":[]
+        }
 
         # Get the folder path to sort
         contents, root_dir = funcs.get_folder()
@@ -39,6 +55,14 @@ class Sort_Editor:
 
                 case "? -v":
                     show_options(True)
+
+                case "1":
+                    print("Please enter the folder name: ")
+                    fname = f.surround("----> ")
+                    folders = cfg_json["folders_2_create"]
+                    folders.append({
+                        "name":fname
+                    })
             
 
         def show_options(verbose=False):
@@ -50,9 +74,6 @@ class Sort_Editor:
                 print("3. Specify file(s) to delete")
                 print("4. Specify folder(s) to delete")
                 print("E. Exit creation editor")
-
-
-        
 
         pass
 
