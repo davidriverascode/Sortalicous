@@ -90,6 +90,8 @@ def aggressive_sort():
 
 def custom_sort():
 
+    print("WARNING - FEATURE UNDER DEVELOPMENT")
+
     config_folder_contents, root_dir = funcs.get_folder(f".\\packages\\sorts")
 
     custom_sort = sort.Sort_Editor(config_folder_contents)
