@@ -205,31 +205,61 @@ def get_ext_fullname(extension):
         else:
             return None
 
-def get_json(config_name):
+def get_json(config_name, path="configs"):
 
-    data = "your mom"
+    # Get the root path
+    path_root_1, path_root_2 = get_paths("configs")
+
+    data = "your mom, NERD"
     try:
-        file = open(f'.\\packages\\startup_configs\\{config_name}', 'r')
+        file = open(f'{path_root_1}{config_name}', 'r')
     except FileNotFoundError:
-        file = open(f"{os.getcwd()}\\Sortalicous\\packages\\startup_configs\\{config_name}", 'r')
+        file = open(f"{path_root_2}{config_name}", 'r')
+    except Exception as error:
+        print(error)
+        return ["Error", error]
 
     data = json.load(file)
     file.close()
-    return data
+    return ["Success", data]
 
-def overwrite_json(new_json, config_name):
+def get_paths(path):
+
+    options = {
+    "configs":[
+        ".\\packages\\startup_configs\\",
+        f"{os.getcwd()}\\Sortalicous\\packages\\startup_configs\\"
+    ],
+    "sorts":[
+        ".\\packages\\sorts\\",
+        f"{os.getcwd()}\\Sortalicous\\packages\\sorts\\"
+    ]
+    }
+
+    if path in options:
+        path_root_1 = options[path][0]
+        path_root_2 = options[path][1]
+
+        return path_root_1, path_root_2
+
+def overwrite_json(new_json, name, path="configs"):
+
+    
+    # Get the root path
+    path_root_1, path_root_2 = get_paths("configs")
 
     try:
-        file = open(f'.\\packages\\startup_configs\\{config_name}', 'w')
+        file = open(f'{path_root_1}{name}', 'w')
     except FileNotFoundError:
-        file = open(f"{os.getcwd()}\\Sortalicous\\packages\\startup_configs\\{config_name}", 'w')
+        file = open(f"{path_root_2}{name}", 'w')
     except Exception as error:
         print(error)
-        return "Error"
+        return ["Error", error]
 
+    # Make the json
     json.dump(new_json, file, indent=4)
     file.close()
-    return
+    return ["Success"]
 
 def make_batch_file(name="default.bat", python_file="startup.py"):
     """

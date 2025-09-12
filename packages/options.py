@@ -4,6 +4,7 @@ import os
 
 from packages.tools import formatting as f
 from packages.tools import file_functions as funcs
+from packages import sort_class as sort
 
 
 options = {
@@ -89,7 +90,13 @@ def aggressive_sort():
 
 def custom_sort():
 
-    print("Feature not finished, check back another day!")
+    config_folder_contents, root_dir = funcs.get_folder(f".\\packages\\sorts")
+
+    custom_sort = sort.Sort_Editor(config_folder_contents)
+
+    f.surround("Entering Custom Sort Creation Editor . . .")
+
+    custom_sort.create_sort()
 
 
 def view_desc():
