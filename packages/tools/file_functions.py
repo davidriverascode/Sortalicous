@@ -208,13 +208,13 @@ def get_ext_fullname(extension):
 def get_json(config_name, path="configs"):
 
     # Get the root path
-    path_root_1, path_root_2 = get_paths("configs")
+    path_root_1, path_root_2 = get_paths(path)
 
     data = "your mom, NERD"
     try:
-        file = open(f'{path_root_1}{config_name}', 'r')
+        file = open(f'{path_root_1}{config_name}.json', 'r')
     except FileNotFoundError:
-        file = open(f"{path_root_2}{config_name}", 'r')
+        file = open(f"{path_root_2}{config_name}.json", 'r')
     except Exception as error:
         print(error)
         return ["Error", error]
@@ -246,12 +246,12 @@ def overwrite_json(new_json, name, path="configs"):
 
     
     # Get the root path
-    path_root_1, path_root_2 = get_paths("configs")
+    path_root_1, path_root_2 = get_paths(path)
 
     try:
-        file = open(f'{path_root_1}{name}', 'w')
+        file = open(f'{path_root_1}{name}.json', 'w')
     except FileNotFoundError:
-        file = open(f"{path_root_2}{name}", 'w')
+        file = open(f"{path_root_2}{name}.json", 'w')
     except Exception as error:
         print(error)
         return ["Error", error]

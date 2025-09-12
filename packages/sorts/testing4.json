@@ -1,15 +1,11 @@
 {
-    "name": "testing",
+    "name": "testing4",
     "folders_2_create": {
         "name": {
             "extensions": [],
             "names": []
         },
-        "NERF": {
-            "extensions": [],
-            "names": []
-        },
-        "BOOBs": {
+        "fname": {
             "extensions": [],
             "names": []
         }

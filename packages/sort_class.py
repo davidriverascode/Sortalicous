@@ -47,15 +47,18 @@ class Sort_Editor:
         # Create the sort config file
         self.create_config(root_dir, name, cfg_json)
         
-
+        f.line()
         print("? for commands")
         creating = True
         while creating:
 
-            # GRAB THE FRESH CONFIG?
+            root = "(custom sort editor)"
 
-            f.surround("Custom Sort Creation Editor")
-            usr_inp = input("---> ")
+            # GRAB THE FRESH CONFIG?
+            # print("\n")
+            # f.surround("Custom Sort Creation Editor")
+            f.line()
+            usr_inp = input(f"{root}-> ")
             f.line()
 
             if usr_inp == "?":
@@ -67,13 +70,15 @@ class Sort_Editor:
             elif usr_inp == "1" or usr_inp == "folder":
                 # Get the folder name
                 print("Please enter the folder name: ")
-                fname = f.surround("----> ")
+                fname = f.surround(f"{root}[folder]->", True)
                 # Add it to the configuration
                 folders = cfg_json["folders_2_create"]
-                folders["fname"] = {
+                folders[fname] = {
                     "extensions":[],
                     "names":[]
                 }
+
+                funcs.overwrite_json(cfg_json, name, "sorts")
                 f.surround(f"Folder {fname} added.")
                 
             elif usr_inp == "2" or usr_inp == "filemove":
@@ -103,6 +108,11 @@ class Sort_Editor:
                 else:
                     print("Unnexpected error with <filemove> <folder access>")
                     
+            elif usr_inp == "5" or usr_inp == "prog":
+
+                curr_cont = funcs.get_json(name, "sorts")
+
+                print(curr_cont)
 
     def show_options(self, verb=False):
         if verb:
